@@ -46,7 +46,9 @@ def parse_habr():
         link = f"https://habr.com{href}" if href.startswith('/') else href
 
         # Ищем дату публикации
-        date_tag = article.find('span', class_='tm-article-datetime-published__time')
+        date_tag = article.find('time')
+        if not date_tag:
+            date_tag = article.find('span', class_='tm-article-datetime-published__time')
         date = date_tag.text.strip() if date_tag else "Дата не указана"
 
         # Берем весь текст из блока статьи (включая превью) и переводим в нижний регистр для поиска
